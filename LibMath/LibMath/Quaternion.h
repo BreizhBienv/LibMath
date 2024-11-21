@@ -368,7 +368,6 @@
 
 			default:
 				return nullptr;
-				break;
 			}
 		}
 
