@@ -103,8 +103,8 @@
 		}
 		Quaternion<T> operator*(const T& pScalaire) const
 		{
-			return Quaternion<T>(this->X * pScalaire, this->Y * pScalaire, this->Z * pScalaire,
-				this->W * pScalaire);
+			return Quaternion<T>(this->mX * pScalaire, this->mY * pScalaire, this->mZ * pScalaire,
+				this->mW * pScalaire);
 		}
 		void operator*=(const T& pScalaire)
 		{
@@ -339,15 +339,15 @@
 
 			switch (pOrder)
 			{
-			case axis_order::XYZ: return (xRot * yRot * zRot).Conjugate();
-			case axis_order::XZY: return (xRot * zRot * yRot).Conjugate();
-			case axis_order::YXZ: return (yRot * xRot * zRot).Conjugate();
-			case axis_order::YZX: return (yRot * zRot * xRot).Conjugate();
-			case axis_order::ZXY: return (zRot * xRot * yRot).Conjugate();
-			case axis_order::ZYX: return (zRot * yRot * xRot).Conjugate();
+				case axis_order::XYZ: return (xRot * yRot * zRot).Conjugate();
+				case axis_order::XZY: return (xRot * zRot * yRot).Conjugate();
+				case axis_order::YXZ: return (yRot * xRot * zRot).Conjugate();
+				case axis_order::YZX: return (yRot * zRot * xRot).Conjugate();
+				case axis_order::ZXY: return (zRot * xRot * yRot).Conjugate();
+				case axis_order::ZYX: return (zRot * yRot * xRot).Conjugate();
 
-			default:
-				return Quaternion<T>();
+				default:
+					return Quaternion<T>();
 			}
 		}
 		
@@ -374,42 +374,42 @@
 
 		void QuatToEuler321Sequence(float& pRoll, float& pPitch, float& pYaw) const
 		{
-			Quaternion<T> normelizedQuat = this->Normalize();
+			Quaternion<T> normalizedQuat = this->Normalize();
 
-			auto test = normelizedQuat.mX * normelizedQuat.mY + normelizedQuat.mZ * normelizedQuat.mW;
+			auto test = normalizedQuat.mX * normalizedQuat.mY + normalizedQuat.mZ * normalizedQuat.mW;
 
-			if (test > 0.499) { // singularity at north pole
-				pPitch = 2 * atan2(normelizedQuat.mX, normelizedQuat.mW);
+			if (test > 0.499) { // singularity at North Pole
+				pPitch = 2 * atan2(normalizedQuat.mX, normalizedQuat.mW);
 				pYaw = M_PI / 2;
 				pRoll = 0;
 				return;
 			}
-			if (test < -0.499) { // singularity at south pole
-				pPitch = -2 * atan2(normelizedQuat.mX, normelizedQuat.mW);
+			if (test < -0.499) { // singularity at South Pole
+				pPitch = -2 * atan2(normalizedQuat.mX, normalizedQuat.mW);
 				pYaw = -M_PI / 2;
 				pRoll = 0;
 				return;
 			}
 
 			// roll (x-axis rotation)
-			double sinr_cosp = 2 * (normelizedQuat->mW * normelizedQuat->mX +
-				normelizedQuat->mY * normelizedQuat->mZ);
-			double cosr_cosp = 1 - 2 * (normelizedQuat->mX * normelizedQuat->mX +
-				normelizedQuat->mY * normelizedQuat->mY);
+			double sinr_cosp = 2 * (normalizedQuat->mW * normalizedQuat->mX +
+				normalizedQuat->mY * normalizedQuat->mZ);
+			double cosr_cosp = 1 - 2 * (normalizedQuat->mX * normalizedQuat->mX +
+				normalizedQuat->mY * normalizedQuat->mY);
 			pRoll = std::atan2(sinr_cosp, cosr_cosp);
 
 			// pitch (y-axis rotation)
-			double sinp = std::sqrt(1 + 2 * (normelizedQuat->mW * normelizedQuat->mY -
-				normelizedQuat->mX * normelizedQuat->mZ));
-			double cosp = std::sqrt(1 - 2 * (normelizedQuat->mW * normelizedQuat->mY -
-				normelizedQuat->mX * normelizedQuat->mZ));
+			double sinp = std::sqrt(1 + 2 * (normalizedQuat->mW * normalizedQuat->mY -
+				normalizedQuat->mX * normalizedQuat->mZ));
+			double cosp = std::sqrt(1 - 2 * (normalizedQuat->mW * normalizedQuat->mY -
+				normalizedQuat->mX * normalizedQuat->mZ));
 			pPitch = 2 * std::atan2(sinp, cosp) - M_PI / 2;
 
 			// yaw (z-axis rotation)
-			double siny_cosp = 2 * (normelizedQuat->mW * normelizedQuat->mZ +
-				normelizedQuat->mX * normelizedQuat->mY);
-			double cosy_cosp = 1 - 2 * (normelizedQuat->mY * normelizedQuat->mY +
-				normelizedQuat->mZ * normelizedQuat->mZ);
+			double siny_cosp = 2 * (normalizedQuat->mW * normalizedQuat->mZ +
+				normalizedQuat->mX * normalizedQuat->mY);
+			double cosy_cosp = 1 - 2 * (normalizedQuat->mY * normalizedQuat->mY +
+				normalizedQuat->mZ * normalizedQuat->mZ);
 			pYaw = std::atan2(siny_cosp, cosy_cosp);
 		}
 
