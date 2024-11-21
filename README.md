@@ -7,12 +7,12 @@ It was made to be used in game engine and possesses a unit test with DirectX12 M
 ## Vectors
 Contains Vec2, Vec3 and Vec4. <br/>
 
-![Vec3](Screenshot/Vector.PNG)<br/>
+![Vec3](Screenshot/Vector.png)<br/>
 
 ## Matrices
 Contains Mat3 and Mat4.<br/>
 
-![Mat4](Screenshot/Matrix.PNG)<br/>
+![Mat4](Screenshot/Matrix.png)<br/>
 
 ## Quaternion
-![XOR](Screenshot/Quaternion.PNG)<br/>
+![XOR](Screenshot/Quaternion.png)<br/>
